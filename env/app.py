@@ -2,9 +2,9 @@ import customtkinter as ctk
 import tkinter as ttk 
 import tkinter.ttk as ttk
 from pytube import YouTube
-import os 
 from tkinter.ttk import *
 from pathlib import Path
+
 
 def download_video():
     url = entry_url.get()
@@ -20,7 +20,8 @@ def download_video():
         yt = YouTube(url, on_progress_callback=on_progress)
         stream = yt.streams.filter(res=resolution).first()
         downloads_path = str(Path.home() / "Downloads")
-        print (downloads_path)
+      
+        
         # downlaod the video into a specific dir
         #os.path.join("downloads",f"{yt.title}.mp4")
         stream.download(output_path=downloads_path)
@@ -37,6 +38,7 @@ def on_progress(stream, chunk, bytes_remaining):
 
     progress_bar.set(float(percentage_completed/100))
     
+
 
 
 # create a root window 
@@ -69,7 +71,9 @@ download_button.pack(pady=(10,5))
 # create a resolutiuon list box
 resolutions = ["720p", "360p","240p"]
 resolution_var = ctk.StringVar()
-resolution_combobox = ttk.Combobox(content_frame, values=resolutions, textvariable= resolution_var)
+combobox_var = ctk.StringVar(value="option 2")
+resolution_combobox = ctk.CTkComboBox(content_frame, values=resolutions,  variable=resolution_var)
+#resolution_combobox = ctk.CTkComboBox(content_frame, values=resolutions, textvariable= resolution_var)
 resolution_combobox.pack(pady=(10,5))
 resolution_combobox.set("720p")
 
